@@ -1,21 +1,27 @@
 // Include React
 var React = require("react");
 
+// sub-components
+var Form = require("./children/Form");
+var Results = require("./children/Results");
+
 // Helper Functions
 var helpers = require('./utils/helpers.js');
 
 var Main = React.createClass({
 
   // Set the default state
-  getInitialState: () => {
+  getInitialState: function() {
     return { searchData: {}, results: {} };
   },
 
-  componentDidUpdate: (prevProps, prevState) => {
+  componentDidUpdate: function(prevProps, prevState) {
     if(prevState.searchData !== this.state.searchData) {
       console.log("Did update");
+      console.log(this.state.searchData);
 
-      helpers.runNYTQuery(this.state.searchData).then((data) => {
+      helpers.runNYTQuery(this.state.searchData)
+      .then(function(data){
         if (data !== this.state.results) {
           console.log("here");
           console.log(data);
@@ -24,11 +30,11 @@ var Main = React.createClass({
     }
   },
 
-  setData: (searchData) => {
+  setData: function(searchData) {
     this.setState({ searchData: searchData });
   },
 
-  render: () => {
+  render: function() {
     return (
       <div className="container">
 
@@ -66,10 +72,10 @@ var Main = React.createClass({
 
             <div className="panel panel-default">
               <div className="panel-heading">
-                <h3 className="panel-title">Panel title</h3>
+                <h3 className="panel-title">Results</h3>
               </div>
               <div className="panel-body">
-                Panel content
+                <Results articles={this.state.results} />
               </div>
             </div>
 
