@@ -5,7 +5,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 
 // Require Click schema
-const Location = require("./models/location");
+// const Location = require("./models/location");
 
 // Create a new express app
 var app = express();
@@ -21,19 +21,19 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-mongoose.connect("mongodb://localhost");
+// mongoose.connect("mongodb://localhost");
 // -------------------------------------------------
 
 // MongoDB configuration (Change this URL to your own DB)
-var db = mongoose.connection;
-
-db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
-});
-
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
+// var db = mongoose.connection;
+//
+// db.on("error", function(err) {
+//   console.log("Mongoose Error: ", err);
+// });
+//
+// db.once("open", function() {
+//   console.log("Mongoose connection successful.");
+// });
 
 // -------------------------------------------------
 
@@ -42,23 +42,23 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-app.post("/api", function(req, res) {
-  let place = new Location({search: req.body.location});
-  place.save()
-  .then(function(){
-    console.log("place successfully inserted")
-  })
-  .catch(function(err){
-    console.log(err);
-  });
-});
-
-app.get("/api/history", function(req, res){
-  db.locations.find().sort({_id: 1}).limit(5)
-  .then(function(locations){
-    console.log(locations);
-  });
-});
+// app.post("/api", function(req, res) {
+//   let place = new Location({search: req.body.location});
+//   place.save()
+//   .then(function(){
+//     console.log("place successfully inserted")
+//   })
+//   .catch(function(err){
+//     console.log(err);
+//   });
+// });
+//
+// app.get("/api/history", function(req, res){
+//   db.locations.find().sort({_id: 1}).limit(5)
+//   .then(function(locations){
+//     console.log(locations);
+//   });
+// });
 
 // -------------------------------------------------
 
