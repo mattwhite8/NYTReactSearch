@@ -56,7 +56,7 @@ var Main = React.createClass({
     return (
       <div className="container">
 
-        {/<div className="row">
+        <div className="row">
 
           <div className="jumbotron">
             <h2 className="text-center">NYT Article Search</h2>
@@ -122,7 +122,7 @@ var Main = React.createClass({
 
         </div>
 
-      </div>*/}
+      </div>
     );
   }
 });
