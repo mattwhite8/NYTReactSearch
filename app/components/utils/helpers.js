@@ -9,8 +9,6 @@ var helpers = {
 
   runNYTQuery: (data) => {
 
-    console.log(data);
-
     var NYTURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     NYTURL += "?q=" + data.topic;
     NYTURL += "&begin_date=" + data.startYear;
@@ -18,7 +16,9 @@ var helpers = {
     NYTURL += "&api-key=" + NYTAPI;
 
     return axios.get(NYTURL).then(function(response){
-      return response.data;
+      console.log("response");
+      console.log(response.data.response.docs.slice(0,5));
+      return response.data.response.docs.slice(0,5);
     });
 
   }

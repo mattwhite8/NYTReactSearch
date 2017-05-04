@@ -2,8 +2,9 @@
 var React = require("react");
 
 // sub-components
-var Form = require("./children/Form");
+var Search = require("./children/Search");
 var Results = require("./children/Results");
+var Saved = require("./children/Saved");
 
 // Helper Functions
 var helpers = require('./utils/helpers.js');
@@ -12,7 +13,7 @@ var Main = React.createClass({
 
   // Set the default state
   getInitialState: function() {
-    return { searchData: {}, results: {} };
+    return { searchData: {}, results: [], saved: [] };
   },
 
   componentDidUpdate: function(prevProps, prevState) {
@@ -24,7 +25,7 @@ var Main = React.createClass({
       .then(function(data){
         if (data !== this.state.results) {
           console.log("here");
-          console.log(data);
+          this.setState({ results: data })
         }
       }.bind(this));
     }
@@ -32,6 +33,23 @@ var Main = React.createClass({
 
   setData: function(searchData) {
     this.setState({ searchData: searchData });
+  },
+
+  saveArticle: function(event) {
+    console.log(event.target.id);
+
+    var articles = this.state.results.filter(result => result._id !== event.target.id);
+    var saved = this.state.results.filter(result => result._id === event.target.id);
+
+    var newSavedState = [
+      ...this.state.saved,
+      saved[0]
+    ];
+
+    console.log(newSavedState);
+
+    this.setState({ results: articles });
+    this.setState({ saved: newSavedState });
   },
 
   render: function() {
@@ -58,7 +76,7 @@ var Main = React.createClass({
                 <h3 className="panel-title">Search</h3>
               </div>
               <div className="panel-body">
-                <Form setData={this.setData} />
+                <Search setData={this.setData} />
               </div>
             </div>
 
@@ -75,7 +93,27 @@ var Main = React.createClass({
                 <h3 className="panel-title">Results</h3>
               </div>
               <div className="panel-body">
-                <Results articles={this.state.results} />
+                <Results
+                  articles={this.state.results}
+                  saveArticle={this.saveArticle}
+                />
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div className="row">
+
+          <div className="col-md-6 col-md-offset-3">
+
+            <div className="panel panel-default">
+              <div className="panel-heading">
+                <h3 className="panel-title">Saved</h3>
+              </div>
+              <div className="panel-body">
+                <Saved saved={this.state.saved}/>
               </div>
             </div>
 

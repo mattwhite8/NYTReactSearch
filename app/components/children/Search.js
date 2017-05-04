@@ -2,7 +2,7 @@
 var React = require("react");
 
 // New component
-var Form = React.createClass({
+var Search = React.createClass({
 
   // Initial state with pieces of data to be sent to API
   getInitialState: function() {
@@ -85,4 +85,4 @@ var Form = React.createClass({
   }
 });
 
-module.exports = Form;
+module.exports = Search;
